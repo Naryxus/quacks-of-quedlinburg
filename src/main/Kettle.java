@@ -42,15 +42,33 @@ public class Kettle {
         nextPosition += ingredient.getQuality();
         ingredients.add(ingredient);
         ingredientPositions.add(nextPosition - 1);
+        System.out.println("Dein Kessel sieht wie folgt aus:");
+        System.out.println(this);
+        if (isExploded()) System.out.println("Dein Kessel ist explodiert.");
+        else System.out.println("Im Kessel sind aktuell " + sumCherryBombPoints() + "/" + maxCherryBombPoints + " enthalten.");
     }
 
     public boolean isExploded() {
-        int sumCherryBombPoints = ingredients.stream()
+        return sumCherryBombPoints() > maxCherryBombPoints;
+    }
+
+    public int sumCherryBombPoints() {
+        return ingredients.stream()
                 .filter(ingredient -> ingredient instanceof CherryBomb)
                 .mapToInt(Ingredient::getQuality)
                 .sum();
+    }
 
-        return sumCherryBombPoints > maxCherryBombPoints;
+    public List<Ingredient> placedIngredients() {
+        return ingredients;
+    }
+
+    public List<Integer> ingredientPositions() {
+        return ingredientPositions;
+    }
+
+    public int victoryPoints() {
+        return victoryPoints[nextPosition];
     }
 
     @Override

@@ -1,9 +1,6 @@
 package main;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.NoSuchElementException;
-import java.util.Random;
+import java.util.*;
 
 public class Bag {
 
@@ -17,6 +14,14 @@ public class Bag {
         content = new HashMap<>();
         size = 0;
         random = new Random();
+    }
+
+    public Bag(List<Ingredient> ingredients) {
+        this();
+
+        if (ingredients == null) throw new NullPointerException("The ingredients must not be null.");
+
+        ingredients.forEach(this::addIngredient);
     }
 
     public void addIngredient(Ingredient ingredient) {
@@ -37,6 +42,7 @@ public class Bag {
             return val - 1;
         });
         size--;
+        System.out.println("Du hast die Zutat " + ingredient + " gezogen");
         return ingredient;
     }
 
